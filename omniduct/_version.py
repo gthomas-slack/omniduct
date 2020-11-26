@@ -51,7 +51,7 @@ __optional_dependencies__ = {
     ],
 
     'presto': [
-        'pyhive[presto]>=0.4',  # Primary client
+        'pyhive[presto]@git+https://github.com/gthomas-slack/PyHive.git@hive-http',  # Primary client
     ],
 
     'pyspark': [
