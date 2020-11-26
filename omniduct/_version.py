@@ -46,7 +46,7 @@ __optional_dependencies__ = {
     ],
 
     'hiveserver2': [
-        'pyhive[hive]>=0.4',  # Primary client
+        'pyhive[hive]@git+https://github.com/gthomas-slack/PyHive.git@hive-http',  # Primary client
         'thrift>=0.10.0',  # Thrift dependency which seems not to be installed with upstream deps
     ],
 
