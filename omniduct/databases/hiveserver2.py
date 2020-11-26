@@ -61,7 +61,10 @@ class HiveServer2Client(DatabaseClient, SchemasMixin):
 
     @override
     def _init(self, schema=None, driver='pyhive', auth_mechanism='NOSASL',
-              push_using_hive_cli=False, default_table_props=None, **connection_options):
+              push_using_hive_cli=False, default_table_props=None,
+              thrift_transport_protocol='binary', http_path=None,
+              **connection_options
+              ):
         """
         schema (str, None): The default database/schema to use for queries (will
             default to server-default if not specified).
@@ -88,6 +91,8 @@ class HiveServer2Client(DatabaseClient, SchemasMixin):
         self.connection_options = connection_options
         self.push_using_hive_cli = push_using_hive_cli
         self.default_table_props = default_table_props or {}
+        self.thrift_transport_protocol = thrift_transport_protocol
+        self.http_path = http_path
         self.__hive = None
         self.connection_fields += ('schema',)
 
@@ -111,6 +116,8 @@ class HiveServer2Client(DatabaseClient, SchemasMixin):
                                               database=self.schema,
                                               username=self.username,
                                               password=self.password,
+                                              thrift_transport_protocol=self.thrift_transport_protocol,
+                                              http_path=self.http_path,
                                               **self.connection_options)
             self._sqlalchemy_engine = create_engine('hive://{}:{}/{}'.format(self.host, self.port, self.schema))
             self._sqlalchemy_metadata = MetaData(self._sqlalchemy_engine)
